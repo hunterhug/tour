@@ -1,3 +1,39 @@
+> 最新修改,采用docker部署:
+
+```
+docker pull hunterhug/gotourzh
+
+docker run -it -p 9999:9999 hunterhug/gotourzh
+
+# 定制化
+docker run -it -p 9999:9999 hunterhug/gotourzh gotour --http=0.0.0.0:9999 --openbrowser=false
+```
+
+打开`http://0.0.0.0:9999`即可!必须是0.0.0.0, 不然websocket会报错, 不能运行!
+
+如果需要远程访问, 请配置Nginx反向代理:
+
+```
+server{
+	listen 80;
+	server_name go.lenggirl.com;
+	charset utf-8;
+	access_log /root/gotour.log;
+	location / {
+  	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  	proxy_set_header Host $http_host;
+  	proxy_redirect off;
+  	proxy_pass http://0.0.0.0:9999;
+
+	proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+	}	
+}
+```
+
+打开: `go.lenggirl.com`
+
 《Go 语言之旅》是官方 Go Tour 的中文翻译版。
 
 在本地安装教程此教程（英文版）最容易的方式，就是安装一份[Go 的二进制发行版](https://golang.org/dl/) 并执行:
@@ -14,8 +50,8 @@
 
 因为依旧因为各种墙, 所以在gotour将所有依赖一并打包进vendor上传, 不再为墙困扰.现在只需要在路径`$GOPATH/github.com/Go-zh`下克隆这个仓库, 移动`vendor`到`GOPATH`, 然后编译安装二进制执行即可:
 
-	$ mkdir -p $GOPATH/github.com/Go-zh
-	$ cd $GOPATH/github.com/Go-zh && git clone 这个仓库
+	$ mkdir -p $GOPATH/src/github.com/Go-zh
+	$ cd $GOPATH/src/github.com/Go-zh && git clone 这个仓库
 	$ cd tour && cp -r vendor/* $GOPATH/src
 	$ cd gotour && go build && go install
 	$ ./gotour
