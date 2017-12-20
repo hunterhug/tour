@@ -1,15 +1,12 @@
-> 最新修改,采用docker部署:
+> 最新修改,采用docker部署(并解决websocket跨域问题):
 
 ```
 docker pull hunterhug/gotourzh
 
 docker run -it -p 9999:9999 hunterhug/gotourzh
-
-# 定制化
-docker run -it -p 9999:9999 hunterhug/gotourzh gotour --http=0.0.0.0:9999 --openbrowser=false
 ```
 
-打开`http://0.0.0.0:9999`即可!必须是0.0.0.0, 不然websocket会报错, 不能运行!
+打开`http://127.0.0.1:9999`即可!
 
 如果需要远程访问, 请配置Nginx反向代理:
 
@@ -23,7 +20,7 @@ server{
   	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
   	proxy_set_header Host $http_host;
   	proxy_redirect off;
-  	proxy_pass http://0.0.0.0:9999;
+  	proxy_pass http://127.0.0.1:9999;
 
 	proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
