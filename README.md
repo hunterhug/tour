@@ -14,7 +14,16 @@
 
 （如果安装过程中出现 `package` 或 `import`
 字样的错误提示，那么说明依赖库的导入路径又挂了。
-这时请猛戳 @OlingCat 并督促其解决= =||）
+这时请猛戳 @OlingCat 并督促其解决= =||）因为依旧因为各种墙, 所以在gotour包里使用了`godep`依赖管理.
+
+现在只需要:
+
+```
+git clone 这个仓库
+cd gotour
+go build && go install
+gotour
+```
 
 翻译贡献者名单：
 
