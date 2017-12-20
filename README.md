@@ -12,13 +12,25 @@
 
 （如果安装过程中出现 `package` 或 `import`字样的错误提示，那么说明依赖库的导入路径又挂了。这时请猛戳 @OlingCat 并督促其解决= =||）
 
-因为依旧因为各种墙, 所以在gotour将所有依赖一并打包进vendor上传, 不再为墙困扰.现在只需要在路径`$GOPATH/github.com/Go-zh`下克隆这个仓库, 然后编译安装二进制执行即可:
+因为依旧因为各种墙, 所以在gotour将所有依赖一并打包进vendor上传, 不再为墙困扰.现在只需要在路径`$GOPATH/github.com/Go-zh`下克隆这个仓库, 移动`vendor`到`GOPATH`, 然后编译安装二进制执行即可:
 
-	$ mkdir -p  $GOPATH/github.com/Go-zh
+	$ mkdir -p $GOPATH/github.com/Go-zh
 	$ cd $GOPATH/github.com/Go-zh && git clone 这个仓库
-	$ cd tour/gotour
-	$ go build && go install
+	$ cd tour && cp -r vendor/* $GOPATH/src
+	$ cd gotour && go build && go install
 	$ ./gotour
+
+如果想远程部署, 请:
+
+```
+gotour -http=0.0.0.0:9999
+```
+
+后台运行
+
+```
+nohup gotour -http=0.0.0.0:9999 &
+```
 
 
 翻译贡献者名单：
